@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivational Quotes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: opaque transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 500px;
+            background-color: opaque transparent;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        
+
+        #result {
+            margin-top: 20px;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        #result.hide {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop>
+        <source src="pexels_videos_1943483 (2160p).mp4" type="video/mp4"> <!-- Replace 'your-background-video.mp4' with the path to your video file -->
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="container text-center">
+        <button onclick="fetchQuotes()" class="btn btn-primary">
+            MOTIVATIONAL QUOTES
+        </button>
+        <div id="result" class="alert mt-6" role="alert">
+            <!-- Result content will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        setInterval(fetchQuotes, 10000);
+
+        function fetchQuotes() {  
+            document.getElementById('result').classList.remove('hide');
+            fetch('https://api.quotable.io/quotes/random')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = data[0]['content'];
+                document.getElementById('result').classList = "alert alert-success mt-8";
+                const audio = new Audio("Ishq Jaisa Kuch.mp3")
+                console.log(data[0]["content"]);
+                audio.play()
+                setTimeout(() => {
+                    document.getElementById('result').classList.add('hide');
+                }, 60000); // Hide result after 5 seconds
+            })
+           
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
